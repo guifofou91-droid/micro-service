@@ -3,11 +3,13 @@
 services:
 
   db:
-    image: mysql
+    image: mysql:latest
     restart: always
     environment:
-       MYSQL_DATABASE: ${DB_NAME}
-       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+       MYSQL_DATABASE: root
+       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
@@ -15,26 +17,7 @@ services:
       retries: 10
     volumes:
       - dbdata:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8888:80
-    environment:
-      - PMA_ARBITRARY=1
-  app:
-    image: ${APP_IMAGE_NAME}
-    ports:
-      - "8090:8090"
-    environment:
-      # Spring Boot interprète automatiquement ces variables
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: ${DB_USER}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-    depends_on:
-      db:
-        condition: service_healthy # L'app attend que MySQL soit "VRAIMENT" prêt
 volumes:
   dbdata:
+
     # (this is just an example, not intended to be a production configuration)
