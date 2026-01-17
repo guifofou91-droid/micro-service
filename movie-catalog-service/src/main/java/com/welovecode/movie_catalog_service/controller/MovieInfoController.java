@@ -3,10 +3,7 @@ package com.welovecode.movie_catalog_service.controller;
 import com.welovecode.movie_catalog_service.model.MovieInfo;
 import com.welovecode.movie_catalog_service.repository.MovieInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,11 @@ public class MovieInfoController {
     @GetMapping("/movie-info/list")
     public List<MovieInfo> getAll(){
         return repository.findAll();
+    }
+
+    @GetMapping("/movie-info/find-path-by-id/{movieinfoId}")
+    public String findPathById(@PathVariable Long movieinfoId){
+        var videoInfoOptional = repository.findById(movieinfoId);
+        return videoInfoOptional.map(MovieInfo::getPath).orElse(null);
     }
 }
