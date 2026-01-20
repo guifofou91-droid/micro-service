@@ -23,4 +23,18 @@ public class MovieInfo {
     public String getPath() {
         return path;
     }
+
+    public MovieInfo(String name, String description, String path) {
+        this.name = name;
+        this.description = description;
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

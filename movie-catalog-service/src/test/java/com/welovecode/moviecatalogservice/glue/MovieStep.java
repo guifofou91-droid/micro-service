@@ -35,11 +35,7 @@ public class MovieStep {
 
     @Given("The user send the following information:")
     public void movieInformation(List<MovieInfo> movieInfos) {
-        movieInfos = MovieInfo.builder()
-                .name(movieInfos.get("name"))
-                .description(movieInfos.get("description"))
-                .path(movieInfos.get("path"))
-                .build();
+        movieInfos = new MovieInfo(movieInfos.get("name"), movieInfos.get("description"), movieInfos.get("path"));
     }
 
     @When("The user save the movie")
