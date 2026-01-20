@@ -1,4 +1,4 @@
-package com.welovecode.movie_catalog_service.model;
+package com.welovecode.moviecatalogservice.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class MovieInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +19,8 @@ public class MovieInfo {
     private String name;
     private String description;
     private String path;
+
+    public String getPath() {
+        return path;
+    }
 }

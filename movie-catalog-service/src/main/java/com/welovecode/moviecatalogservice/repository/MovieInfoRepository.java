@@ -1,6 +1,6 @@
-package com.welovecode.movie_catalog_service.repository;
+package com.welovecode.moviecatalogservice.repository;
 
-import com.welovecode.movie_catalog_service.model.MovieInfo;
+import com.welovecode.moviecatalogservice.model.MovieInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

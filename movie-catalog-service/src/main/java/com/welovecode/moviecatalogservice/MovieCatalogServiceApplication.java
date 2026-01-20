@@ -1,4 +1,4 @@
-package com.welovecode.movie_catalog_service;
+package com.welovecode.moviecatalogservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
