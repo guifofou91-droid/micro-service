@@ -10,31 +10,22 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity
 public class MovieInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private String name;
+    @NonNull
     private String description;
+    @NonNull
     private String path;
-
-    public String getPath() {
-        return path;
-    }
 
     public MovieInfo(String name, String description, String path) {
         this.name = name;
         this.description = description;
         this.path = path;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }
