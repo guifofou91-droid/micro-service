@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = MovieCatalogServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class MovieCatalogServiceApplicationTests {
 
     @Test

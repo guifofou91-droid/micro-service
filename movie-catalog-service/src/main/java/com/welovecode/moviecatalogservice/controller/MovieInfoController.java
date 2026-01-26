@@ -2,18 +2,15 @@ package com.welovecode.moviecatalogservice.controller;
 
 import com.welovecode.moviecatalogservice.exception.ResourceNotFoundException;
 import com.welovecode.moviecatalogservice.model.MovieInfo;
-import com.welovecode.moviecatalogservice.repository.MovieInfoRepository;
 import com.welovecode.moviecatalogservice.service.IMoviService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -28,7 +25,7 @@ public class MovieInfoController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<MovieInfo> save(@RequestBody @Validated MovieInfo movieInfo){
+    public ResponseEntity<MovieInfo> save(@RequestBody MovieInfo movieInfo){
         log.info("CREATE MOVIE");
         return new ResponseEntity<>(service.saveMovie(movieInfo), HttpStatus.CREATED);
     }
@@ -40,7 +37,7 @@ public class MovieInfoController {
     }
 
     @GetMapping("/{movieInfoId}")
-    public ResponseEntity<String> findPathById(@PathVariable Long movieInfoId){
+    public ResponseEntity<String> findPathById(@PathVariable UUID movieInfoId){
         log.info("GET MOVIE BY ID: {}", movieInfoId);
         Optional<MovieInfo> movieOptional = service.getById(movieInfoId);
         return movieOptional

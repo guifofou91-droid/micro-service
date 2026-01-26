@@ -1,42 +1,47 @@
 package com.welovecode.moviecatalogservice.service;
 
 import com.welovecode.moviecatalogservice.model.MovieInfo;
+import com.welovecode.moviecatalogservice.repository.MovieInfoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.mock;
+import java.util.UUID;
 
-@Testcontainers
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
 class MovieServiceImpTest {
 
-    @Container
-    @ServiceConnection
-    static MySQLContainer mysql = new MySQLContainer("mysql:latest");
 
+    @Mock
+    private MovieInfoRepository movieInfoRepository;
 
-    private IMoviService moviService;
-
-    public void setup() {
-        moviService = mock(MovieServiceImp.class);
-    }
+    @InjectMocks
+    private MovieServiceImp moviService;
 
     @Test
-    public void shouldCreateMovie() {
+    public void shouldCreateMovieSuccessfully() {
         // Given
-        MovieInfo movieInfo = new MovieInfo("Ironman", "Description Iron man", "F://movies/action");
-
+        MovieInfo movieInfoSave = new MovieInfo(UUID.randomUUID(),"Ironman", "Description Iron man", "F://movies/action");
+        MovieInfo movieInfoToSave = new MovieInfo("Ironman", "Description Iron man", "F://movies/action");
+        when(movieInfoRepository.save(any(MovieInfo.class))).thenReturn(movieInfoSave);
         // When
-        MovieInfo movieInfoSave = moviService.saveMovie(movieInfo);
+        MovieInfo movieInfo = moviService.saveMovie(movieInfoToSave);
 
         // Then
-        Assertions.assertNotNull(movieInfoSave);
-        Assertions.assertNotNull(movieInfoSave.getId());
-        Assertions.assertEquals(movieInfoSave.getName(), movieInfo.getName());
-        Assertions.assertEquals(movieInfoSave.getDescription(), movieInfo.getDescription());
-        Assertions.assertEquals(movieInfoSave.getPath(), movieInfo.getPath());
+        Assertions.assertNotNull(movieInfo);
+        Assertions.assertNotNull(movieInfo.getId());
+        Assertions.assertEquals(movieInfo.getName(), movieInfoToSave.getName());
+        Assertions.assertEquals(movieInfo.getDescription(), movieInfoToSave.getDescription());
+        Assertions.assertEquals(movieInfo.getPath(), movieInfoToSave.getPath());
+
+        verify(movieInfoRepository).save(any(MovieInfo.class));
     }
 }
